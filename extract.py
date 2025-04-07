@@ -3,6 +3,7 @@ import pprint
 import ifcopenshell
 import ifcopenshell.util.element
 import ifcopenshell.util.system
+import ifcopenshell.util.shape_builder
 
 f = ifcopenshell.open("/home/dion/basix.ifc")
 
@@ -269,6 +270,155 @@ def ceiling_roof_details():
     return results
 
 
+def insulation_requirements():
+    results = {}
+    for ifc_class in ["IfcRoof", "IfcWall", "IfcCovering", "IfcSlab"]:
+        for element in f.by_type(ifc_class):
+            pset_name = "Pset_{}Common".format(ifc_class[3:])
+            u_value = ifcopenshell.util.element.get_pset(element, pset_name, "ThermalTransmittance")
+            results.setdefault(u_value, []).append(element)
+    return results
+
+
+def bedroom_ceiling_fans():
+    for e in f.by_type("IfcSpace"):
+        if ifcopenshell.util.element.get_predefined_type(e) != "BEDROOM":
+            continue
+        has_fan = False
+        for se in ifcopenshell.util.element.get_decomposition(e):
+            if se.is_a("IfcElectricAppliance") and "fan" in ifcopenshell.util.element.get_predefined_type(e).lower():
+                has_fan = True
+                break
+        if not has_fan:
+            return False
+    return True
+
+
+def habitable_ceiling_fans():
+    name = "Daytime Habitable Space"
+    for zone in f.by_type("IfcZone"):
+        if zone.Name != name:
+            continue
+        for e in ifcopenshell.util.system.get_system_elements(zone):
+            if not e.is_a("IfcSpace"):
+                continue
+            has_fan = False
+            for se in ifcopenshell.util.element.get_decomposition(e):
+                if (
+                    se.is_a("IfcElectricAppliance")
+                    and "fan" in ifcopenshell.util.element.get_predefined_type(e).lower()
+                ):
+                    has_fan = True
+                    break
+            if not has_fan:
+                return False
+    return True
+
+
+def windows_doors():
+    results = []
+    for ifc_class in ["IfcWindow", "IfcDoor"]:
+        for element in f.by_type(ifc_class):
+            matrix = ifcopenshell.util.placement.get_local_placement(element.ObjectPlacement)
+            y_axis = matrix[:, 1][:2]
+            angle = ifcopenshell.util.shape_builder.np_angle_signed(y_axis, np.array((1.0, 0.0)))
+            # Note this is project north not true north
+            if angle >= -22.5 and angle < 22.5:
+                orientation = "EAST"
+            elif angle >= 22.5 and angle < 67.5:
+                orientation = "NORTHEAST"
+            elif angle >= 67.5 and angle < 112.5:
+                orientation = "NORTH"
+            elif angle >= 112.5 and angle < 157.5:
+                orientation = "NORTHWEST"
+            elif angle >= 157.5:
+                orientation = "WEST"
+            elif angle >= -67.5 and angle < -22.5:
+                orientation = "SOUTHEAST"
+            elif angle >= -112.5 and angle < -67.5:
+                orientation = "SOUTH"
+            elif angle >= -157.5 and angle < -112.5:
+                orientation = "SOUTHWEST"
+            elif angle < -157.5:
+                orientation = "WEST"
+            frame = "composite"
+            material = ifcopenshell.util.element.get_material(element, should_skip_usage=True)
+            mapping = {"aluminium": "aluminium", "wood": "timber", "plastic": "upvc", "steel": "steel"}
+            if material and material.is_a("IfcConstituentSet"):
+                for constituent in material.MaterialConstituents:
+                    if constituent.Name != "Lining":
+                        continue
+                    category = (
+                        getattr(constituent.Material, "Category", None) or constituent.Material.Name or ""
+                    ).lower()
+                    for k, v in mapping.items():
+                        if k in category:
+                            frame = v
+                            break
+
+            operation = None
+            if ifc_class == "IfcDoor":
+                operation_type = element.OperationType
+                if operation_type == "USERDEFINED":
+                    operation_type = element.UserDefinedOperationType
+                for kw in ["SWING", "FOLD", "SLIDING", "BIFOLD", "TRIFOLD", "STACKER", "FRENCH"]:
+                    if kw in operation_type.upper():
+                        operation = kw
+            elif ifc_class == "IfcWindow":
+                operation_type = (
+                    ifcopenshell.util.element.get_pset(element, "Pset_WindowPanelProperties", "OperationType") or ""
+                )
+                if operation_type == "USERDEFINED":
+                    operation_type = (
+                        ifcopenshell.util.element.get_pset(
+                            element, "Pset_WindowPanelProperties", "UserDefinedOperationType"
+                        )
+                        or ""
+                    )
+                for k, v in {
+                    "TOPHUNG": "AWNING",
+                    "SIDEHUNG": "CASEMENT",
+                    "SLIDINGVERTICAL": "DOUBLEHUNG",
+                    "FIXEDCASEMENT": "FIXED",
+                    "LOUVRE": "LOUVRE",
+                    "TILT": "TILT",
+                    "SLIDINGHORIZONTAL": "SLIDING",
+                    "BIFOLD": "BIFOLD",
+                    "TRIFOLD": "BIFOLD",
+                    "STACKER": "STACKER",
+                }:
+                    if k in operation_type.upper():
+                        operation = v
+
+            data = {
+                "global_id": element.GlobalId,
+                "orientation": orientation,
+                "height": ifcopenshell.util.element.get_pset(element, f"Qto_{ifc_class[3:]}BaseQuantities", "Height")
+                or 0.0,
+                "width": ifcopenshell.util.element.get_pset(element, f"Qto_{ifc_class[3:]}BaseQuantities", "Width")
+                or 0.0,
+                "window_or_door": ifc_class,
+                "is_skylight": ifcopenshell.util.element.get_predefined_type(element) == "SKYLIGHT",
+                "frame": frame,
+                "glass": ifcopenshell.util.element.get_pset(element, "Pset_DoorWindowGlazingType", "GlassLayers") or 1,
+                "operation": operation,
+                "uvalue": ifcopenshell.util.element.get_pset(
+                    element, f"Pset_{ifc_class[3:]}Common", "ThermalTransmittance"
+                ),
+                "shgc": ifcopenshell.util.element.get_pset(
+                    element, "Pset_DoorWindowGlazingType", "SolarHeatGainTransmittance"
+                ),
+                # Should be a property of the spatial zone
+                "floor_type": ifcopenshell.util.element.get_pset(element, "bSA_BASIX", "FloorType"),
+                # Should be a property of the space container
+                "space_function": ifcopenshell.util.element.get_pset(element, "bSA_BASIX", "SpaceFunction"),
+                # Should be a property of the adjacent or rel connects covering
+                "floor_covering": ifcopenshell.util.element.get_pset(element, "bSA_BASIX", "FloorCovering"),
+            }
+            results.append(data)
+    return results
+
+
 data = {
     "project_address": get_project_address(),
     "project_name": f.by_type("IfcProject")[0].LongName or "",
@@ -328,6 +478,10 @@ data.update(
         "external_wall_details": external_wall_details(),
         "internal_wall_details": internal_wall_details(),
         "ceiling_roof_details": ceiling_roof_details(),
+        "insulation_requirements": insulation_requirements(),
+        "bedroom_ceiling_fans": bedroom_ceiling_fans(),
+        "habitable_ceiling_fans": habitable_ceiling_fans(),
+        "windows_doors": windows_doors(),
     }
 )
 

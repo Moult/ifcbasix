@@ -163,7 +163,7 @@ def indoor_outdoor_pool():
             e, "Pset_SanitaryTerminalTypeBath", "BathType"
         ) == ["POOL"]:
             if space := ifcopenshell.util.element.get_container(e, ifc_class="IfcSpace"):
-                if is_external := ifcopenshell.util.element.get_pset(space, "Pset_SpaceCommon", "IsExternal"):
+                if (is_external := ifcopenshell.util.element.get_pset(space, "Pset_SpaceCommon", "IsExternal")) is not None:
                     return bool(is_external)
     return None
 
@@ -419,6 +419,115 @@ def windows_doors():
     return results
 
 
+def hot_water_system_type():
+    for element in f.by_type("IfcDistributionSystem"):
+        if ifcopenshell.util.element.get_predefined_type(element) != "DOMESTICHOTWATER":
+            continue
+        if result := ifcopenshell.util.element.get_pset(element, "bSA_BASIX", "HotWaterSystemType"):
+            return result
+
+
+def system_type(system_type, room_type):
+    for element in f.by_type("IfcDistributionSystem"):
+        for rel in element.ReferencedInStructures:
+            space = rel.RelatingStructure
+            if space.is_a("IfcSpace") and ifcopenshell.util.element.get_predefined_type(space) == room_type:
+                if result := ifcopenshell.util.element.get_pset(element, "bSA_BASIX", system_type):
+                    return result
+
+
+def kitchen_natural_light():
+    for element in f.by_type("IfcWindow"):
+        if space := ifcopenshell.util.element.get_container(element, ifc_class="IfcSpace"):
+            if ifcopenshell.util.element.get_predefined_type(space) == "KITCHEN":
+                return True
+        for space in ifcopenshell.util.element.get_referenced_structures(element):
+            if space.is_a("IfcSpace") and ifcopenshell.util.element.get_predefined_type(space) == "KITCHEN":
+                return True
+    return False
+
+
+def total_bathroom_natural_light():
+    spaces = set()
+    for element in f.by_type("IfcWindow"):
+        if space := ifcopenshell.util.element.get_container(element, ifc_class="IfcSpace"):
+            if ifcopenshell.util.element.get_predefined_type(space) in ["BATHROOM", "TOILET"]:
+                spaces.add(space)
+        for space in ifcopenshell.util.element.get_referenced_structures(element):
+            if space.is_a("IfcSpace") and ifcopenshell.util.element.get_predefined_type(space) in [
+                "BATHROOM",
+                "TOILET",
+            ]:
+                spaces.add(space)
+    return len(spaces)
+
+
+def artificial_lighting():
+    total = 0
+    total_efficient = 0
+    for element in f.by_type("IfcLightFixture"):
+        total += 1
+        if ifcopenshell.util.element.get_pset(element, "bSA_BASIX", "LampType") in [
+            "COMPACTFLUORESCENT",
+            "FLUORESCENT",
+            "LED",
+        ]:
+            total_efficient += 1
+    return total_efficient / total >= 0.8
+
+
+def bath_heating_system(bath_type):
+    for system in f.by_type("IfcDistributionSystem"):
+        for element in ifcopenshell.util.system.get_system_elements(system):
+            if (
+                element.is_a("IfcSanitaryTerminalType")
+                and ifcopenshell.util.element.get_predefined_type(element) == "BATH"
+                and ifcopenshell.util.element.get_pset(element, "Pset_SanitaryTerminalTypeBath", "BathType") == [bath_type]
+            ):
+                if result := ifcopenshell.util.element.get_pset(system, "bSA_BASIX", "PoolHeatingSystemType"):
+                    return result
+
+
+def bath_pump(bath_type, prop):
+    for element in f.by_type("IfcSanitaryTerminalType"):
+        if (
+            ifcopenshell.util.element.get_predefined_type(element) != "BATH"
+            or ifcopenshell.util.element.get_pset(element, "Pset_SanitaryTerminalTypeBath", "BathType") != [bath_type]
+        ):
+            continue
+        for system in ifcopenshell.util.system.get_element_systems(element):
+            for pump in ifcopenshell.util.system.get_system_elements(system):
+                if pump.is_a("IfcPump") and (r := ifcopenshell.util.element.get_pset(system, "bSA_BASIX", prop)):
+                    return r
+
+
+def pv_output():
+    results = []
+    for element in f.by_type("IfcDistributionSystem"):
+        if ifcopenshell.util.element.get_predefined_type(element) == "POWERGENERATION":
+            if r := ifcopenshell.util.element.get_pset(system, "bSA_BASIX", "RatedElectricalOutput"):
+                results.append(r)
+    return results
+
+
+def cooktop_oven_type():
+    elements = f.by_type("IfcBurner")
+    elements += f.by_type("IfcElectricAppliance")
+    for element in elements:
+        if r := ifcopenshell.util.element.get_pset(element, "bSA_BASIX", "CooktopOvenType"):
+            return r
+
+
+def clothesline(is_external):
+    for element in f.by_type("IfcFurniture"):
+        if ifcopenshell.util.element.get_predefined_type(element) == "CLOTHESLINE":
+            if space := ifcopenshell.util.element.get_container(element, ifc_class="IfcSpace"):
+                if ifcopenshell.util.element.get_pset(space, "Pset_SpaceCommon", "IsExternal") == is_external:
+                    return True
+    return False
+
+
+
 data = {
     "project_address": get_project_address(),
     "project_name": f.by_type("IfcProject")[0].LongName or "",
@@ -482,6 +591,35 @@ data.update(
         "bedroom_ceiling_fans": bedroom_ceiling_fans(),
         "habitable_ceiling_fans": habitable_ceiling_fans(),
         "windows_doors": windows_doors(),
+    }
+)
+
+# Step 4
+data.update(
+    {
+        "hot_water_system_type": hot_water_system_type(),
+        "cooling_system_type_living_room": system_type("CoolingSystemType", "LIVINGROOM"),
+        "cooling_system_type_bedroom": system_type("CoolingSystemType", "BEDROOM"),
+        "heating_system_type_living_room": system_type("HeatingSystemType", "LIVINGROOM"),
+        "heating_system_type_bedroom": system_type("HeatingSystemType", "BEDROOM"),
+        "exhaust_system_type_bathroom": system_type("ExhaustSystemType", "BATHROOM"),
+        "exhaust_system_control_bathroom": system_type("ExhaustSystemControl", "BATHROOM"),
+        "exhaust_system_type_kitchen": system_type("ExhaustSystemType", "KITCHEN"),
+        "exhaust_system_control_kitchen": system_type("ExhaustSystemControl", "KITCHEN"),
+        "exhaust_system_type_laundry": system_type("ExhaustSystemType", "LAUNDRY"),
+        "kitchen_natural_light": kitchen_natural_light(),
+        "total_bathroom_natural_light": total_bathroom_natural_light(),
+        "artificial_lighting": artificial_lighting(),
+        "pool_heating_system": bath_heating_system("POOL"),
+        "pool_pump_timer_control": bath_pump("POOL", "IsPumpTimerControlled"),
+        "pool_pump_speed": bath_pump("POOL", "PumpSpeedType"),
+        "pool_pump_star_rating": bath_pump("POOL", "PumpStarRating"),
+        "spa_heating_system": bath_heating_system("SPA"),
+        "spa_pump_timer_control": bath_pump("SPA", "IsPumpTimerControlled"),
+        "pv_output": pv_output(),
+        "cooktop_oven_type": cooktop_oven_type(),
+        "outdoor_clothesline": clothesline(True),
+        "indoor_clothesline": clothesline(False),
     }
 )
 

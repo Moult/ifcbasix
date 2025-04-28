@@ -528,10 +528,11 @@ def clothesline(is_external):
 
 
 
+# Step 1
 data = {
-    "project_address": get_project_address(),
     "project_name": f.by_type("IfcProject")[0].LongName or "",
     "plan_type": get_plan_type(),
+    "project_address": get_project_address(),
     "lot_section_plan": get_lot_section_plan(),
     "project_type": get_project_type(),
     "total_bedrooms": get_total_bedrooms(),

@@ -145,15 +145,16 @@ def system(predefined_type):
     return results
 
 
-def basix_system(predefined_type):
+def basix_system(alternative_supply):
     results = []
     presets = ["TOWNWATER", "RETICULATEDALTERNATIVE"]
     for e in f.by_type("IfcDistributionSystem"):
-        if ifcopenshell.util.element.get_predefined_type(e) != predefined_type:
+        if ifcopenshell.util.element.get_predefined_type(e) != "WATERSUPPLY":
             continue
         if not ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "WaterSupplyType") not in presets:
             continue
-        results.append(e)
+        if alternative_supply in ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "AlternativeSupplyFor") or []:
+            results.append(e)
     return results
 
 
@@ -257,7 +258,7 @@ def ceiling_roof_details():
                 "roof_area": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "RoofArea"),
                 "construction_type": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "ConstructionType"),
                 "frame": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "Frame"),
-                "roof_space_ventilation": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "roof_space_ventilation"),
+                "roof_space_ventilation": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "RoofSpaceVentilation"),
                 "roof_colour": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "RoofColour"),
                 "ceiling_insulation": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "CeilingInsulation"),
                 "roof_insulation": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "RoofInsulation"),
@@ -358,9 +359,15 @@ def windows_doors():
 
             operation = None
             if ifc_class == "IfcDoor":
-                operation_type = element.OperationType
-                if operation_type == "USERDEFINED":
-                    operation_type = element.UserDefinedOperationType
+                operation_type = None
+                if relating_type := ifcopenshell.util.element.get_type(element):
+                    operation_type = relating_type.OperationType
+                    if operation_type == "USERDEFINED":
+                        operation_type = relating_type.UserDefinedOperationType
+                if not operation_type:
+                    operation_type = element.OperationType
+                    if operation_type == "USERDEFINED":
+                        operation_type = element.UserDefinedOperationType
                 for kw in ["SWING", "FOLD", "SLIDING", "BIFOLD", "TRIFOLD", "STACKER", "FRENCH"]:
                     if kw in operation_type.upper():
                         operation = kw
@@ -398,7 +405,7 @@ def windows_doors():
                 "width": ifcopenshell.util.element.get_pset(element, f"Qto_{ifc_class[3:]}BaseQuantities", "Width")
                 or 0.0,
                 "window_or_door": ifc_class,
-                "is_skylight": ifcopenshell.util.element.get_predefined_type(element) == "SKYLIGHT",
+                "is_skylight": ifcopenshell.util.element.get_predefined_type(element) in ("SKYLIGHT", "LIGHTDOME"),
                 "frame": frame,
                 "glass": ifcopenshell.util.element.get_pset(element, "Pset_DoorWindowGlazingType", "GlassLayers") or 1,
                 "operation": operation,
@@ -565,11 +572,11 @@ data.update(
         "private_dam": None,
         "hot_water_system": system("DOMESTICHOTWATER"),
         "reticulated_alternative_water_supply_connection": system("WATERSUPPLY"),
-        "garden_and_lawn_alternative": basix_system("WATERSUPPLY"),
-        "toilet_alternative": basix_system("WATERSUPPLY"),
-        "laundry_alternative": basix_system("WATERSUPPLY"),
-        "hot_water_alternative": basix_system("WATERSUPPLY"),
-        "drinking_alternative": basix_system("WATERSUPPLY"),
+        "garden_and_lawn_alternative": basix_system("GARDENLAWN"),
+        "toilet_alternative": basix_system("TOILET"),
+        "laundry_alternative": basix_system("LAUNDRY"),
+        "hot_water_alternative": basix_system("HOTWATER"),
+        "drinking_alternative": basix_system("DRINKING"),
         # If has pool / spa
         "indoor_outdoor_pool": indoor_outdoor_pool(),
         "pool_volume": bath_pset("POOL", "PoolVolume", 0.0),

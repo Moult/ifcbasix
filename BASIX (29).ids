@@ -1,0 +1,1393 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--Created with ids-editor.com-->
+<ids:ids xmlns:ids="http://standards.buildingsmart.org/IDS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://standards.buildingsmart.org/IDS http://standards.buildingsmart.org/IDS/1.0/ids.xsd">
+  <ids:info>
+    <ids:title>BASIX</ids:title>
+    <ids:copyright>Awesome Team</ids:copyright>
+    <ids:version>0.0.13</ids:version>
+    <ids:description>These requirements are required by BASIX</ids:description>
+    <ids:author>dion@thinkmoult.com, john.mitchell@cqr.net.au</ids:author>
+    <ids:date>2025-05-05</ids:date>
+    <ids:purpose>Minimum Requirements</ids:purpose>
+  </ids:info>
+  <ids:specifications>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="1.2 Project Name" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCPROJECT</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:attribute cardinality="required">
+          <ids:name>
+            <ids:simpleValue>LongName</ids:simpleValue>
+          </ids:name>
+        </ids:attribute>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="1.2 Plan Type" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSITE</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCIDENTIFIER" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_LandRegistration</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>LandTitleID</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="(SP|DP).+"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="1.2 Property Address" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSITE</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_Address</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>Town</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_Address</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>Country</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_Address</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>Region</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_Address</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>PostalCode</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="1.2 Lot / Section / Plan" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSITE</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCIDENTIFIER" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_Site</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>SectionNumber</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCIDENTIFIER" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_Site</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>LotNumber</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="1.3 Project Type" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCBUILDING</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>ProjectType</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Dwelling house (detached)"/>
+              <xs:enumeration value="Dwelling house (attached)"/>
+              <xs:enumeration value="Dwelling above existing building"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="1.3 Number of Bedrooms" identifier="{code}">
+      <ids:applicability minOccurs="1" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSPACE</ids:simpleValue>
+          </ids:name>
+          <ids:predefinedType>
+            <ids:simpleValue>BEDROOM</ids:simpleValue>
+          </ids:predefinedType>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="1.3 Is Secondary Dwelling" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCBUILDING</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>IsSecondaryDwelling</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="1.4 Site Area" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSITE</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCAREAMEASURE" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Qto_SiteBaseQuantities</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>GrossArea</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="1.4 Roof Area" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCROOF</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCAREAMEASURE" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Qto_RoofBaseQuantities</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>ProjectedArea</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="1.4 Number of Storeys" identifier="{code}">
+      <ids:applicability minOccurs="1" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCBUILDINGSTOREY</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="1.4 Space Areas" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSPACE</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCAREAMEASURE" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Qto_SpaceBaseQuantities</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>GrossFloorArea</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="1.4 Zoned Floor Areas" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCZONE</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:attribute>
+          <ids:name>
+            <ids:simpleValue>Name</ids:simpleValue>
+          </ids:name>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Conditioned Floor Area"/>
+              <xs:enumeration value="Unconditioned Floor Area"/>
+              <xs:enumeration value="Garage Floor Area"/>
+              <xs:enumeration value="Mezzanine Floor Area"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:attribute>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="1.4 Has Swimming Pool and / or Spa" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSANITARYTERMINALTYPE</ids:simpleValue>
+          </ids:name>
+          <ids:predefinedType>
+            <ids:simpleValue>BATH</ids:simpleValue>
+          </ids:predefinedType>
+        </ids:entity>
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_SanitaryTerminalTypeBath</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>BathType</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="POOL"/>
+              <xs:enumeration value="SPA"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.1 Garden and Planting Zones" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCZONE</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:attribute>
+          <ids:name>
+            <ids:simpleValue>Name</ids:simpleValue>
+          </ids:name>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Garden and Lawn Area"/>
+              <xs:enumeration value="Indigenous and Low Water Planting Area"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:attribute>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.2 Fixture Water Rating" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSANITARYTERMINAL</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:attribute>
+          <ids:name>
+            <ids:simpleValue>PredefinedType</ids:simpleValue>
+          </ids:name>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="SHOWER"/>
+              <xs:enumeration value="TOILETPAN"/>
+              <xs:enumeration value="SINK"/>
+              <xs:enumeration value="WASHHANDBASIN"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:attribute>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCINTEGER" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>WELSRating</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.3 Water systems" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCDISTRIBUTIONSYSTEM</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:attribute>
+          <ids:name>
+            <ids:simpleValue>PredefinedType</ids:simpleValue>
+          </ids:name>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="RAINWATER"/>
+              <xs:enumeration value="STORMWATER"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:attribute>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.3 Tank" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCTANK</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:partOf>
+          <ids:entity>
+            <ids:name>
+              <ids:simpleValue>IFCDISTRIBUTIONSYSTEM</ids:simpleValue>
+            </ids:name>
+          </ids:entity>
+        </ids:partOf>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.3 Alternative water supply" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCDISTRIBUTIONSYSTEM</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:attribute>
+          <ids:name>
+            <ids:simpleValue>PredefinedType</ids:simpleValue>
+          </ids:name>
+          <ids:value>
+            <ids:simpleValue>WATERSUPPLY</ids:simpleValue>
+          </ids:value>
+        </ids:attribute>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.3 Greywater systems" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCDISTRIBUTIONSYSTEM</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:attribute>
+          <ids:name>
+            <ids:simpleValue>PredefinedType</ids:simpleValue>
+          </ids:name>
+          <ids:value>
+            <ids:simpleValue>WASTEWATER</ids:simpleValue>
+          </ids:value>
+        </ids:attribute>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.3 Greywater treatment" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="IFCFILTER"/>
+              <xs:enumeration value="IFCINTERCEPTOR"/>
+            </xs:restriction>
+          </ids:name>
+        </ids:entity>
+        <ids:partOf>
+          <ids:entity>
+            <ids:name>
+              <ids:simpleValue>IFCDISTRIBUTIONSYSTEM</ids:simpleValue>
+            </ids:name>
+          </ids:entity>
+        </ids:partOf>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.3 Hot water systems" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCDISTRIBUTIONSYSTEM</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:attribute>
+          <ids:name>
+            <ids:simpleValue>PredefinedType</ids:simpleValue>
+          </ids:name>
+          <ids:value>
+            <ids:simpleValue>DOMESTICHOTWATER</ids:simpleValue>
+          </ids:value>
+        </ids:attribute>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.4 Reticulated alternative recycled water" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCDISTRIBUTIONSYSTEM</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:attribute>
+          <ids:name>
+            <ids:simpleValue>PredefinedType</ids:simpleValue>
+          </ids:name>
+          <ids:value>
+            <ids:simpleValue>WATERSUPPLY</ids:simpleValue>
+          </ids:value>
+        </ids:attribute>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.4 Reticulated alternative recycled water" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCDISTRIBUTIONSYSTEM</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:attribute>
+          <ids:name>
+            <ids:simpleValue>PredefinedType</ids:simpleValue>
+          </ids:name>
+          <ids:value>
+            <ids:simpleValue>WATERSUPPLY</ids:simpleValue>
+          </ids:value>
+        </ids:attribute>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>AlternativeSupplyFor</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="GARDENLAWN"/>
+              <xs:enumeration value="TOILET"/>
+              <xs:enumeration value="LAUNDRY"/>
+              <xs:enumeration value="HOTWATER"/>
+              <xs:enumeration value="DRINKING"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>WaterSupplyType</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="TOWNWATER"/>
+              <xs:enumeration value="RETICULATEDALTERNATIVE"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.5 Space indoors / outdoors" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSPACE</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_SpaceCommon</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>IsExternal</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.5 Pools must be in a space" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSANITARYTERMINALTYPE</ids:simpleValue>
+          </ids:name>
+          <ids:predefinedType>
+            <ids:simpleValue>BATH</ids:simpleValue>
+          </ids:predefinedType>
+        </ids:entity>
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_SanitaryTerminalTypeBath</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>BathType</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <ids:simpleValue>POOL</ids:simpleValue>
+          </ids:value>
+        </ids:property>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:partOf>
+          <ids:entity>
+            <ids:name>
+              <ids:simpleValue>IFCSPACE</ids:simpleValue>
+            </ids:name>
+          </ids:entity>
+        </ids:partOf>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.5 Pool data" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSANITARYTERMINALTYPE</ids:simpleValue>
+          </ids:name>
+          <ids:predefinedType>
+            <ids:simpleValue>BATH</ids:simpleValue>
+          </ids:predefinedType>
+        </ids:entity>
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_SanitaryTerminalTypeBath</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>BathType</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <ids:simpleValue>POOL</ids:simpleValue>
+          </ids:value>
+        </ids:property>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCVOLUMEMEASURE" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>PoolVolume</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>PoolShaded</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>PoolCover</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="2.5 Spa data" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSANITARYTERMINALTYPE</ids:simpleValue>
+          </ids:name>
+          <ids:predefinedType>
+            <ids:simpleValue>BATH</ids:simpleValue>
+          </ids:predefinedType>
+        </ids:entity>
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_SanitaryTerminalTypeBath</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>BathType</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <ids:simpleValue>SPA</ids:simpleValue>
+          </ids:value>
+        </ids:property>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>SpaCover</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>SpaCover</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCVOLUMEMEASURE" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>SpaVolume</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Floor Details" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSPATIALZONE</ids:simpleValue>
+          </ids:name>
+          <ids:predefinedType>
+            <ids:simpleValue>THERMAL</ids:simpleValue>
+          </ids:predefinedType>
+        </ids:entity>
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>FloorType</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>AdditionalInsulation</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>FloorInsulation</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>ReflectiveFoil</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>FormOfConstruction</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>HeatingSystem</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCAREAMEASURE" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>FloorArea</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>FloorType</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="CONCRETESLABONGROUND"/>
+              <xs:enumeration value="SUSPENDEDFLOORABOVEENCLOSEDSUBFLOOR"/>
+              <xs:enumeration value="SUSPENDEDFLOORABOVEOPENSUBFLOOR"/>
+              <xs:enumeration value="FIRSTFLOOR"/>
+              <xs:enumeration value="SUSPENDEDFLOORABOVEGARAGE"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>SubfloorInsulation</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>SubfloorWallInsulation</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Floor Details (Garage)" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSPATIALZONE</ids:simpleValue>
+          </ids:name>
+          <ids:predefinedType>
+            <ids:simpleValue>THERMAL</ids:simpleValue>
+          </ids:predefinedType>
+        </ids:entity>
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>FloorType</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <ids:simpleValue>SUSPENDEDFLOORABOVEGARAGE</ids:simpleValue>
+          </ids:value>
+        </ids:property>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>Insulation</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>LowEmissions</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>SlabType</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 External Wall Identification" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCWALL</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_WallCommon</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>IsExternal</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Wall Details" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCWALL</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:attribute cardinality="required" instructions="... describe what to put in here">
+          <ids:name>
+            <ids:simpleValue>Name</ids:simpleValue>
+          </ids:name>
+        </ids:attribute>
+        <ids:attribute cardinality="required" instructions="... describe">
+          <ids:name>
+            <ids:simpleValue>Description</ids:simpleValue>
+          </ids:name>
+        </ids:attribute>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>Insulation</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>ConstructionType</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>Frame</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 External Wall Details" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCWALL</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:property dataType="IFCBOOLEAN">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_WallCommon</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>IsExternal</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <ids:simpleValue>TRUE</ids:simpleValue>
+          </ids:value>
+        </ids:property>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCBOOLEAN" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>ReflectiveFoil</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>LowEmissions</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>WallColour</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Wall Area" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCWALL</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCAREAMEASURE" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Qto_WallBaseQuantities</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>Area</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Ceiling / Roof Details" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCSPATIALZONE</ids:simpleValue>
+          </ids:name>
+          <ids:predefinedType>
+            <ids:simpleValue>THERMAL</ids:simpleValue>
+          </ids:predefinedType>
+        </ids:entity>
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>CeilingRoofType</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCAREAMEASURE" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>RoofArea</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>RoofColour</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>CeilingInsulation</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>InsulationLocation</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>ConstructionType</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>RoofSpaceVentilation</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>CeilingRoofType</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="FLATCEILINGPITCHEDROOF"/>
+              <xs:enumeration value="RAKEDCEILINGPITCHEDROOF"/>
+              <xs:enumeration value="FLATCEILINGROOF"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>Frame</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>RoofInsulation</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>CeilingAreaUninsulated</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Insulation requirements" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="IFCROOF"/>
+              <xs:enumeration value="IFCWALL"/>
+              <xs:enumeration value="IFCCOVERING"/>
+              <xs:enumeration value="IFCSLAB"/>
+            </xs:restriction>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCTHERMALTRANSMITTANCEMEASURE" cardinality="required">
+          <ids:propertySet>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Pset_RoofCommon"/>
+              <xs:enumeration value="Pset_WallCommon"/>
+              <xs:enumeration value="Pset_CoveringCommon"/>
+              <xs:enumeration value="Pset_SlabCommon"/>
+            </xs:restriction>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>ThermalTransmittance</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Fans" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCELECTRICAPPLIANCE</ids:simpleValue>
+          </ids:name>
+          <ids:predefinedType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value=".*FAN.*"/>
+            </xs:restriction>
+          </ids:predefinedType>
+        </ids:entity>
+        <ids:partOf>
+          <ids:entity>
+            <ids:name>
+              <ids:simpleValue>IFCSPACE</ids:simpleValue>
+            </ids:name>
+          </ids:entity>
+        </ids:partOf>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Zoned Habitable Areas" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCZONE</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:attribute>
+          <ids:name>
+            <ids:simpleValue>Name</ids:simpleValue>
+          </ids:name>
+          <ids:value>
+            <ids:simpleValue>Daytime Habitable Space</ids:simpleValue>
+          </ids:value>
+        </ids:attribute>
+      </ids:applicability>
+      <ids:requirements/>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Door Window Materials" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="IFCDOOR"/>
+              <xs:enumeration value="IFCWINDOW"/>
+            </xs:restriction>
+          </ids:name>
+        </ids:entity>
+        <ids:material>
+          <ids:value>
+            <ids:simpleValue>Lining</ids:simpleValue>
+          </ids:value>
+        </ids:material>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:material cardinality="required">
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="aluminium"/>
+              <xs:enumeration value="wood"/>
+              <xs:enumeration value="plastic"/>
+              <xs:enumeration value="steel"/>
+              <xs:enumeration value="composite"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:material>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Door Operation" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCDOOR</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>OperationType</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="FOLD"/>
+              <xs:enumeration value="ROLLER"/>
+              <xs:enumeration value="SLIDING"/>
+              <xs:enumeration value="SWING"/>
+              <xs:enumeration value="NA"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Door User defined Operation" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCDOOR</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:attribute>
+          <ids:name>
+            <ids:simpleValue>OperationType</ids:simpleValue>
+          </ids:name>
+          <ids:value>
+            <ids:simpleValue>USERDEFINED</ids:simpleValue>
+          </ids:value>
+        </ids:attribute>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:attribute cardinality="required">
+          <ids:name>
+            <ids:simpleValue>UserDefinedOperationType</ids:simpleValue>
+          </ids:name>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:pattern value=".*(BIFOLD|TRIFOLD|STACKER|FRENCH).*"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:attribute>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Window Operation" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCWINDOW</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet>
+            <ids:simpleValue>bSA_BASIX</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>OperationType</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="TILT"/>
+              <xs:enumeration value="HUNG"/>
+              <xs:enumeration value="FIXED"/>
+              <xs:enumeration value="LOUVRE"/>
+              <xs:enumeration value="SKYLIGHT"/>
+              <xs:enumeration value="BIFOLD"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Window User defined Operation" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCWINDOW</ids:simpleValue>
+          </ids:name>
+        </ids:entity>
+        <ids:property dataType="IFCLABEL">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_WindowPanelProperties</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>OperationType</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <ids:simpleValue>USERDEFINED</ids:simpleValue>
+          </ids:value>
+        </ids:property>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_WindowPanelProperties</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>UserDefinedOperationType</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <xs:restriction base="xs:string">
+              <xs:pattern value=".*(LOUVRE|BIFOLD|TRIFOLD|STACKER).*"/>
+            </xs:restriction>
+          </ids:value>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Window Skylights" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCWINDOW</ids:simpleValue>
+          </ids:name>
+          <ids:predefinedType>
+            <ids:simpleValue>SKYLIGHT</ids:simpleValue>
+          </ids:predefinedType>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:entity>
+          <ids:name>
+            <ids:simpleValue>IFCWINDOW</ids:simpleValue>
+          </ids:name>
+          <ids:predefinedType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value=".*(LOUVRE|BIFOLD|TRIFOLD|SKYLIGHT|STACKER).*"/>
+            </xs:restriction>
+          </ids:predefinedType>
+        </ids:entity>
+      </ids:requirements>
+    </ids:specification>
+    <ids:specification ifcVersion="IFC2X3 IFC4 IFC4X3_ADD2" name="3 Window / Door Data" identifier="{code}">
+      <ids:applicability minOccurs="0" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="IFCDOOR"/>
+              <xs:enumeration value="IFCWINDOW"/>
+            </xs:restriction>
+          </ids:name>
+        </ids:entity>
+        <ids:property dataType="IFCBOOLEAN">
+          <ids:propertySet>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Pset_DoorCommon"/>
+              <xs:enumeration value="Pset_WindowCommon"/>
+            </xs:restriction>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>IsExternal</ids:simpleValue>
+          </ids:baseName>
+          <ids:value>
+            <ids:simpleValue>TRUE</ids:simpleValue>
+          </ids:value>
+        </ids:property>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCTHERMALTRANSMITTANCEMEASURE" cardinality="required">
+          <ids:propertySet>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Pset_DoorCommon"/>
+              <xs:enumeration value="Pset_WindowCommon"/>
+            </xs:restriction>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>ThermalTransmittance</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCCOUNTMEASURE" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_DoorWindowGlazingType</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>GlassLayers</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCNORMALISEDRATIOMEASURE" cardinality="required">
+          <ids:propertySet>
+            <ids:simpleValue>Pset_DoorWindowGlazingType</ids:simpleValue>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>SolarHeatGainTransmittance</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLENGTHMEASURE" cardinality="required">
+          <ids:propertySet>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Qto_DoorBaseQuantities"/>
+              <xs:enumeration value="Qto_WindowBaseQuantities"/>
+            </xs:restriction>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>Height</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+        <ids:property dataType="IFCLENGTHMEASURE" cardinality="required">
+          <ids:propertySet>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Qto_DoorBaseQuantities"/>
+              <xs:enumeration value="Qto_WindowBaseQuantities"/>
+            </xs:restriction>
+          </ids:propertySet>
+          <ids:baseName>
+            <ids:simpleValue>Width</ids:simpleValue>
+          </ids:baseName>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+  </ids:specifications>
+</ids:ids>

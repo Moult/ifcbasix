@@ -398,7 +398,7 @@ def extract_basix(f):
                         "BIFOLD": "BIFOLD",
                         "TRIFOLD": "BIFOLD",
                         "STACKER": "STACKER",
-                    }:
+                    }.items():
                         if k in operation_type.upper():
                             operation = v
 

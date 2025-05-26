@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<style>
+@font-face {
+    font-family: 'PublicSansRegular';
+    src: url('PublicSansRegular.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+html, body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: 'PublicSansRegular';
+}
+a { color: inherit; text-decoration: inherit; }
+a:hover { color: inherit; }
+.blueheader { height: 35px; background-color: #002664; padding-left: 14px; color: #fff; line-height: 35px; }
+.fright { float: right; }
+.redheader { padding: 7px 14px; background-color: #D7153A; min-height: 56px; color: #fff; font-size: 20px; line-height: 56px; }
+.redbutton {
+border-radius: 4px;
+  border: 2px solid #002664;
+  background-image: none;
+  background-color: #FFFFFF;
+  height: 42px;
+  padding: 7px 12px 7px 12px;
+  color: #22272B;
+}
+.circle, .circle-white {
+    border-radius: 50%;
+    left: 0;
+  top: -20px;
+  margin-top: 14px;
+  background: #002664;
+  color: #FFFFFF;
+  border: 1px solid #002664;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  line-height: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+.circle-white {
+  background: #fff;
+  color: #002664;
+}
+.line, .line-white {
+  display: inline-block;
+    width: 120px !important;
+    height: 2px;
+    background: #002664;
+    position: relative;
+    top: -5px;
+    left: -4px;
+    margin-right: -7px;
+}
+.line-white {
+    background: #cdd3d6;
+}
+.step-text span {
+    display: inline-block;
+    width: 148px;
+    font-size: 14px;
+    color: #000;
+    font-weight: bold;
+}
+.steps, .step-text { margin-left: auto; margin-right: auto; width: 1100px; }
+.steps { margin-top: 20px;}
+.maincontent {
+    background: #fff;
+    width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 50px;
+    color: #111;
+    margin-top: 50px;
+    border-top: 1px solid #ccc;
+}
+.tabs {
+    border-bottom: 2px solid #ccc;
+}
+.tab, .tabactive {
+    display: inline-block;
+    width: 200px;
+    color: #002664;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px;
+}
+.tab:hover, .tabactive:hover {
+    background-color: #cce7f0;
+    cursor: pointer;
+}
+.tabactive {
+    border-bottom: 2px solid #d7153a;
+    color: #111;
+}
+.radio, .radioactive {
+  width: 25px;
+  height: 25px;
+  border: 1px solid #002664;
+  background-color: #fff;
+  border-radius: 50%;
+  display: inline-block;
+}
+.radioactive {
+  border: 7px solid #002664;
+  width: 15px;
+  height: 15px;
+}
+label { font-weight: bold; color: #222; margin-top: 20px; margin-bottom: 0px; display: block; }
+select, input {
+    border: 1px solid #000;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    min-width: 100px;
+}
+input {
+    min-width: 500px;
+}
+select:hover {
+    background-color: #cce7f0;
+}
+body { background-color: #f2f2f2; margin-bottom: 50px; }
+.bottombar {
+    position: fixed;
+    bottom: 0px;
+    height: 30px;
+    background-color: #fff;
+    width: calc(100% - 40px);
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+td, th {
+    margin: 0;
+    padding: 10px;
+    border: 1px solid #000;
+
+}
+table {
+ border-collapse: collapse;
+ width: 100%;
+}
+tr {
+    margin: 0;
+}
+td input, td select {
+    min-width: auto;
+    max-width: 100px;
+}
+thead {
+    border-bottom: 1px solid #000;
+}
+</style>
+    </head>
+    <body>
+        <div class="blueheader">Totally Not A NSW Government Website</div>
+        <div class="whiteheader" style="background-color: #fff;">
+            <img src="data:image/png;base64,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" />
+            <img src="data:image/png;base64,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" class="fright" />
+        </div>
+        <div class="redheader">
+            <span style="font-weight: bold; margin-right: 30px;">BASIX Application</span>
+            <span style="margin-right: 30px;">Reference number: BSX-119202</span>
+            <div style="float: right;">
+                <span style="margin-right: 30px;">Version: 4.03</span>
+                <span class="redbutton">Copy to new application</span>
+                <span class="redbutton">Close and home</span>
+            </div>
+        </div>
+        <div style="background-color: #002664; text-align: center; font-weight: bold; font-size: 16px; padding: 10px; color: #fff;">
+            Submission
+        </div>
+        <div class="main">
+            <div class="steps">
+                <a href="page-11.html"><span class="circle">1</span></a>
+                <span class="line"> </span>
+                <a href="page-21.html"><span class="circle-white">2</span></a>
+                <span class="line-white"> </span>
+                <a href="page-33.html"><span class="circle-white">3</span></a>
+                <span class="line-white"> </span>
+                <span class="circle-white">4</span>
+                <span class="line-white"> </span>
+                <span class="circle-white">5</span>
+                <span class="line-white"> </span>
+                <span class="circle-white">6</span>
+                <span class="line-white"> </span>
+                <span class="circle-white">7</span>
+            </div>
+            <div class="step-text">
+                <span>Project details</span>
+                    <span>Water details</span>
+                    <span>Thermal performance</span>
+                    <span>Energy details</span>
+                    <span>Material details</span>
+                    <span>Summary</span>
+                    <span>BASIX Certificate</span>
+            </div>
+            <div class="maincontent">
+                <p>
+                Select each category below to input information about your project. You do not need to complete this section before continuing to the next section.
+                </p>
+                {{#is_section_1}}
+                <div class="tabs">
+                    <span class="tabactive"><a href="page-11.html">1.1 Applicant details</a></span>
+                    <span class="tab"><a href="page-12.html">1.2 Project address</a></span>
+                    <span class="tab"><a href="page-13.html">1.3 Project type</a></span>
+                    <span class="tab"><a href="page-14.html">1.4 Site details</a></span>
+                </div>
+                {{/is_section_1}}
+                {{#is_section_2}}
+                <div class="tabs">
+                    <span class="tabactive"><a href="page-21.html">2.1 Landscape</a></span>
+                    <span class="tab"><a href="page-22.html">2.2 Fixtures</a></span>
+                </div>
+                {{/is_section_2}}
+                {{#is_section_3}}
+                <div class="tabs">
+                    <span class="tabactive"><a href="page-33.html">3.3 Construction details</a></span>
+                    <span class="tab"><a href="page-36.html">3.6 Windows & doors</a></span>
+                </div>
+                {{/is_section_3}}
+
+                {{#is_page_11}}
+                <label>Is the applicant a business/ company?</label><br />
+                <span class="radio"></span> Yes<br />
+                <span class="radioactive"></span> No<br />
+                <label>Title</label><br />
+                <select>
+                    <option>Mr</option>
+                    <option>Mrs</option>
+                </select>
+                <label>First given name</label><br />
+                Cinnamon<br />
+                <label>Other given name/s</label><br />
+                <input value="the Cutest"></input>
+                <label>Family name</label><br />
+                Rabbit<br />
+                <label>Email</label><br />
+                cinnamon@rabbit.org<br />
+                <label>Street address</label><br />
+                <input value="Sydney Olympic Park"></input>
+                {{/is_page_11}}
+
+                {{#is_page_12}}
+                <p>
+                Enter your project's name and address
+                </p>
+
+                <label>Project name</label><br />
+                <input value="{{project_name}}"></input>
+
+                <label>Plan type</label><br />
+                <span class="{{#www_is_dp}}radioactive{{/www_is_dp}}{{^www_is_dp}}radio{{/www_is_dp}}"></span> Deposited Plan (DP)<br />
+                <span class="{{^www_is_dp}}radioactive{{/www_is_dp}}{{#www_is_dp}}radio{{/www_is_dp}}"></span> Strata Plan (SP)<br />
+
+                <p>
+                Select the property location<br />
+Note: Please check address details are correct before progressing. The address cannot be changed once a certificate is generated.
+                </p>
+
+                <p>
+Please use address did not display :
+                </p>
+
+
+                <ul>
+                    <li>If your property or site has multiple lots and addresses. You can then add multiple lot/DPs manually.</li>
+                    <li>If your property is located across more than one local government area.</li>
+                    <li>If your application relates to a larger site that was previously known by a Lot/DP that is now subdivided.</li>
+                </ul>
+
+                <label>Enter Lot/Section Number/Plan</label><br />
+                <input value="{{lot_section_plan}}"></input>
+                {{/is_page_12}}
+
+                {{#is_page_13}}
+                <label>Select one of the following to specify your project type.</label>
+                <span class="{{#www_is_dhd}}radioactive{{/www_is_dhd}}{{^www_is_dhd}}radio{{/www_is_dhd}}"></span> Dwelling house (detached)<br />
+                <span class="{{#www_is_dha}}radioactive{{/www_is_dha}}{{^www_is_dha}}radio{{/www_is_dha}}"></span> Dwelling house (attached)<br />
+                <span class="{{#www_is_daeb}}radioactive{{/www_is_daeb}}{{^www_is_daeb}}radio{{/www_is_daeb}}"></span> Dwelling above existing building<br />
+
+                <label>Enter the number of bedrooms for your dwelling </label>
+                <input value="{{total_bedrooms}}"></input>
+
+                <label>Is your project a secondary dwelling? </label>
+                <span class="{{#is_secondary_dwelling}}radioactive{{/is_secondary_dwelling}}{{^is_secondary_dwelling}}radio{{/is_secondary_dwelling}}"></span> Yes<br />
+                <span class="{{#is_secondary_dwelling}}radio{{/is_secondary_dwelling}}{{^is_secondary_dwelling}}radioactive{{/is_secondary_dwelling}}"></span> No<br />
+                {{/is_page_13}}
+
+                {{#is_page_14}}
+                <label>Enter the site details of your project.</label>
+                <label>Enter the site area (m²) of your development </label>
+                <input value="{{site_area}}"></input>
+                <label>Enter the roof area (m²) of your development </label>
+                <input value="{{roof_area}}"></input>
+                <label>Enter the number of storeys (include habitable attic rooms, exclude non-habitable levels) </label>
+                <input value="{{total_storeys}}"></input>
+                <label>Enter the conditioned floor area (m²) of your development </label>
+                <input value="{{conditioned_floor_area}}"></input>
+                <label>Enter the unconditioned floor area (m²) of your development (exclude garages) </label>
+                <input value="{{unconditioned_floor_area}}"></input>
+                <label>Enter the floor area (m²) of garage(s) (exclude carports and out-buildings) </label>
+                <input value="{{garage_floor_area}}"></input>
+                <label>Enter the floor area (m²) of mezzanines open to and above a habitable floor (exclude stair or stair landings or open passageways, gantries or corridors 1.1m or less wide)</label>
+                <input value="{{mezzanine_floor_area}}"></input>
+                <label>Are you installing a swimming pool (indoor or outdoor)? </label>
+                <span class="{{#has_swimming_pool}}radioactive{{/has_swimming_pool}}{{^has_swimming_pool}}radio{{/has_swimming_pool}}"></span> Yes<br />
+                <span class="{{#has_swimming_pool}}radio{{/has_swimming_pool}}{{^has_swimming_pool}}radioactive{{/has_swimming_pool}}"></span> No<br />
+                <label>Are you installing an outdoor spa? </label>
+                <span class="{{#has_outdoor_spa}}radioactive{{/has_outdoor_spa}}{{^has_outdoor_spa}}radio{{/has_outdoor_spa}}"></span> Yes<br />
+                <span class="{{#has_outdoor_spa}}radio{{/has_outdoor_spa}}{{^has_outdoor_spa}}radioactive{{/has_outdoor_spa}}"></span> No<br />
+                {{/is_page_14}}
+
+                {{#is_page_21}}
+                <label>Enter the details of your proposed landscape.</label>
+                <label>Enter the total area (m²) of garden and lawn </label>
+                <input value="{{garden_lawn_area}}"></input>
+                <label>Enter the area (m²) of indigenous or low water use species </label>
+                <input value="{{indigenous_low_water_area}}"></input>
+
+                <p>To get a list of species, use either: The Department's list of indigenous species (pdf) OR Sydney Water's plant selector tool and select from the list of "One drop" plants </p>
+                {{/is_page_21}}
+
+                {{#is_page_22}}
+                <p>Select the intended water rating for all the fixtures in your dwelling.</p>
+                <label>Enter the water rating of all showerheads </label>
+                <select>
+                    {{#www_showerhead_water_rating}}
+                    <option{{#is_selected}} selected{{/is_selected}}>{{rating}} star</option>
+                    {{/www_showerhead_water_rating}}
+                </select>
+                <label>Enter the water rating of all toilets </label>
+                <select>
+                    {{#www_toilet_water_rating}}
+                    <option{{#is_selected}} selected{{/is_selected}}>{{rating}} star</option>
+                    {{/www_toilet_water_rating}}
+                </select>
+                <label>Enter the water rating of all kitchen taps </label>
+                <select>
+                    {{#www_kitchen_water_rating}}
+                    <option{{#is_selected}} selected{{/is_selected}}>{{rating}} star</option>
+                    {{/www_kitchen_water_rating}}
+                </select>
+                <label>Enter the water rating of all bathroom taps </label>
+                <select>
+                    {{#www_bathroom_water_rating}}
+                    <option{{#is_selected}} selected{{/is_selected}}>{{rating}} star</option>
+                    {{/www_bathroom_water_rating}}
+                </select>
+                {{/is_page_22}}
+
+                {{#is_page_33}}
+                <br /><br />
+                <table>
+                    <thead>
+                        <th>External wall types</th>
+                        <th>Construction Type </th>
+                        <th>Area </th>
+                        <th>Frame </th>
+                        <th>Low Emissions </th>
+                        <th>Insulation </th>
+                        <th>Reflective Foil </th>
+                        <th>Wall Colour</th>
+                    </thead>
+                    <tbody>
+                        {{#external_wall_details}}
+                        <tr>
+                            <td>{{name}} - {{description}}</td>
+                            <td><select>
+                                <option>{{construction_type}}</option>
+                                <option>Other</option>
+                            </select></td>
+                            <td><input value="{{area}}"></input></td>
+                            <td><select>
+                                    <option>{{frame}}</option>
+                                <option>Other</option>
+                            </select></td>
+                            <td><select>
+                                    <option>{{low_emissions}}</option>
+                                <option>Other</option>
+                            </select></td>
+                            <td><select>
+                                <option>{{insulation}}</option>
+                                <option>Other</option>
+                            </select></td>
+                            <td>
+                <span class="{{#reflective_foil}}radioactive{{/reflective_foil}}{{^reflective_foil}}radio{{/reflective_foil}}"></span> Yes<br />
+                <span class="{{#reflective_foil}}radio{{/reflective_foil}}{{^reflective_foil}}radioactive{{/reflective_foil}}"></span> No<br />
+                            </td>
+                            <td><select>
+                                <option>{{wall_colour}}</option>
+                                <option>Other</option>
+                            </select></td>
+                        </tr>
+                        {{/external_wall_details}}
+                    </tbody>
+                </table>
+
+                <br /><br />
+
+                <table>
+                    <thead>
+                        <th>Internal wall types</th>
+                        <th>Construction Type </th>
+                        <th>Area </th>
+                        <th>Frame </th>
+                        <th>Insulation </th>
+                    </thead>
+                    <tbody>
+                        {{#internal_wall_details}}
+                        <tr>
+                            <td>{{name}} - {{description}}</td>
+                            <td><select>
+                                <option>{{construction_type}}</option>
+                                <option>Other</option>
+                            </select></td>
+                            <td><input value="{{area}}"></input></td>
+                            <td><select>
+                                    <option>{{frame}}</option>
+                                <option>Other</option>
+                            </select></td>
+                            <td><select>
+                                <option>{{insulation}}</option>
+                                <option>Other</option>
+                            </select></td>
+                        </tr>
+                        {{/internal_wall_details}}
+                    </tbody>
+                </table>
+                {{/is_page_33}}
+
+
+                {{#is_page_36}}
+                <br /><br />
+                <table>
+                    <thead>
+                        <th>Orientation</th>
+                        <th>Window/Door Number</th>
+                        <th>Height including frame (mm)</th>
+                        <th>Width including frame (mm)</th>
+                        <th>WindowOrDoor </th>
+                        <th>Frame and glass</th>
+                        <th>Operating Type</th>
+                        <th>U-Value </th>
+                        <th>SHGC </th>
+                        <th>Heating load feedback</th>
+                        <th>Cooling load feedback</th>
+                    </thead>
+                    <tbody>
+                        {{#windows_doors}}
+                        <tr>
+                            <td>{{orientation}}</td>
+                            <td>{{name}}</td>
+                            <td><input value="{{height}}"></input></td>
+                            <td><input value="{{width}}"></input></td>
+                            <td>{{window_or_door}}</td>
+                            <td>{{frame}}, {{glass}} layers</td>
+                            <td>{{operation}}</td>
+                            <td>{{uvalue}}</td>
+                            <td>{{shgc}}</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                        </tr>
+                        {{/windows_doors}}
+                    </tbody>
+                </table>
+                {{/is_page_36}}
+
+
+            </div>
+        </div>
+        <div class="bottombar">
+            <span style="float: left;">
+            <span class="redbutton">Cancel</span>
+            </span>
+            <span style="float: right;">
+            <span class="redbutton">Save and exit</span>
+            <span class="redbutton">Save and continue</span>
+            </span>
+        </div>
+    </body>
+</html>
+

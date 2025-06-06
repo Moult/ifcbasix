@@ -1,0 +1,228 @@
+{
+  "ModelVersion": "2.0",
+  "OrganizationCode": "lendlease",
+  "DictionaryCode": "basix",
+  "DictionaryName": "bSA BASIX",
+  "DictionaryVersion": "0.0.1",
+  "LanguageIsoCode": "en-AU",
+  "LanguageOnly": false,
+  "UseOwnUri": false,
+  "DictionaryUri": null,
+  "License": "CC-BY-4.0",
+  "LicenseUrl": "https://spdx.org/licenses/CC-BY-4.0.html",
+  "ChangeRequestEmailAddress": "dion.moult@lendlease.com",
+  "MoreInfoUrl": "https://digitalengineering.lendlease.com",
+  "QualityAssuranceProcedure": "ByPizzaDonation",
+  "QualityAssuranceProcedureUrl": "https://dominos.com.au",
+  "ReleaseDate": "2025-05-05",
+  "Status": "Preview",
+  "Classes": [
+    {
+      "Code": "Site",
+      "Name": "Site",
+      "ClassType": "GroupOfProperties",
+      "RelatedIfcEntityNamesList": [
+        "IfcSite"
+      ],
+      "ClassProperties": [
+        {
+          "PropertyCode": "LotNumber",
+          "PropertySet": "bSA_Site"
+        },
+        {
+          "PropertyCode": "SectionNumber",
+          "PropertySet": "bSA_Site"
+        },
+        {
+          "PropertyUri": "https://identifier.buildingsmart.org/uri/buildingsmart/ifc/4.3/prop/Town",
+          "PropertySet": "Pset_Address"
+        },
+        {
+          "PropertyUri": "https://identifier.buildingsmart.org/uri/buildingsmart/ifc/4.3/prop/PostalCode",
+          "PropertySet": "Pset_Address"
+        },
+        {
+          "PropertyUri": "https://identifier.buildingsmart.org/uri/buildingsmart/ifc/4.3/prop/Region",
+          "PropertySet": "Pset_Address"
+        },
+        {
+          "PropertyUri": "https://identifier.buildingsmart.org/uri/buildingsmart/ifc/4.3/prop/Country",
+          "PropertySet": "Pset_Address"
+        },
+        {
+          "PropertyUri": "https://identifier.buildingsmart.org/uri/buildingsmart/ifc/4.3/prop/LandTitleID",
+          "PropertySet": "Pset_LandRegistration"
+        },
+        {
+          "PropertyUri": "https://identifier.buildingsmart.org/uri/buildingsmart/ifc/4.3/prop/GrossArea",
+          "PropertySet": "Qto_SiteBaseQuantities"
+        }
+      ]
+    },
+    {
+      "Code": "Project",
+      "Name": "Project",
+      "ClassType": "GroupOfProperties",
+      "RelatedIfcEntityNamesList": [
+        "IfcProject"
+      ],
+      "ClassProperties": [
+        {
+          "PropertyCode": "ProjectType",
+          "PropertySet": "bSA_BASIX"
+        }
+      ]
+    },
+    {
+      "Code": "Building",
+      "Name": "Building",
+      "ClassType": "GroupOfProperties",
+      "RelatedIfcEntityNamesList": [
+        "IfcBuilding"
+      ],
+      "ClassProperties": [
+        {
+          "PropertyCode": "IsSecondaryDwelling",
+          "PropertySet": "bSA_BASIX"
+        }
+      ]
+    },
+    {
+      "Code": "Roof",
+      "Name": "Roof",
+      "ClassType": "GroupOfProperties",
+      "RelatedIfcEntityNamesList": [
+        "IfcRoof"
+      ],
+      "ClassProperties": [
+        {
+          "PropertyUri": "https://identifier.buildingsmart.org/uri/buildingsmart/ifc/4.3/prop/ProjectedArea",
+          "PropertySet": "Qto_RoofBaseQuantities"
+        }
+      ]
+    },
+    {
+      "Code": "Space",
+      "Name": "Space",
+      "ClassType": "GroupOfProperties",
+      "RelatedIfcEntityNamesList": [
+        "IfcSpace"
+      ],
+      "ClassProperties": [
+        {
+          "PropertyUri": "https://identifier.buildingsmart.org/uri/buildingsmart/ifc/4.3/prop/GrossFloorArea",
+          "PropertySet": "Qto_SpaceBaseQuantities"
+        }
+      ]
+    },
+    {
+      "Code": "SanitaryTerminal",
+      "Name": "SanitaryTerminal",
+      "ClassType": "GroupOfProperties",
+      "RelatedIfcEntityNamesList": [
+        "IfcSanitaryTerminalBATH"
+      ],
+      "ClassProperties": [
+        {
+          "PropertyUri": "https://identifier.buildingsmart.org/uri/buildingsmart/ifc/4.3/prop/BathType",
+          "PropertySet": "Pset_SanitaryTerminalTypeBath"
+        }
+      ]
+    }
+  ],
+  "Properties": [
+    {
+      "Code": "IsSecondaryDwelling",
+      "Name": "IsSecondaryDwelling",
+      "Definition": "True if a secondary dwelling",
+      "DataType": " Boolean"
+    },
+    {
+      "Code": "ProjectType",
+      "Name": "ProjectType",
+      "Definition": "Type of project",
+      "DataType": "String",
+      "AllowedValues": [
+        {
+          "Code": "Dwelling house (detached)",
+          "Value": "Dwelling house (detached)"
+        },
+        {
+          "Code": "Dwelling house (attached)",
+          "Value": "Dwelling house (attached)"
+        },
+        {
+          "Code": "Dwelling above existing building",
+          "Value": "Dwelling above existing building"
+        }
+      ]
+    },
+    {
+      "Code": "LotNumber",
+      "Name": "LotNumber",
+      "Definition": "The lot number of the site",
+      "DataType": "String",
+      "AllowedValues": []
+    },
+    {
+      "Code": "SectionNumber",
+      "Name": "SectionNumber",
+      "Definition": "The section number of the site",
+      "DataType": "String",
+      "AllowedValues": []
+    },
+    {
+      "Code": "Asdf",
+      "Name": "Asdf",
+      "Definition": "The lot number of the site",
+      "Description": "Refer to Torrens Title System",
+      "DataType": "String",
+      "Units": [],
+      "Example": "42",
+      "ActivationDateUtc": null,
+      "ConnectedPropertyCodes": [
+        "SectionNumber"
+      ],
+      "CountriesOfUse": [
+        "AU"
+      ],
+      "CountryOfOrigin": "AU",
+      "CreatorLanguageIsoCode": "en-AU",
+      "DeActivationDateUtc": null,
+      "DeprecationExplanation": null,
+      "Dimension": null,
+      "DimensionLength": null,
+      "DimensionMass": null,
+      "DimensionTime": null,
+      "DimensionElectricCurrent": null,
+      "DimensionThermodynamicTemperature": null,
+      "DimensionAmountOfSubstance": null,
+      "DimensionLuminousIntensity": null,
+      "DocumentReference": null,
+      "DynamicParameterPropertyCodes": [],
+      "IsDynamic": false,
+      "MaxExclusive": null,
+      "MaxInclusive": null,
+      "MinExclusive": null,
+      "MinInclusive": null,
+      "MethodOfMeasurement": null,
+      "OwnedUri": null,
+      "Pattern": null,
+      "PhysicalQuantity": null,
+      "PropertyValueKind": "Single",
+      "ReplacedObjectCodes": [],
+      "ReplacingObjectCodes": [],
+      "RevisionDateUtc": null,
+      "RevisionNumber": null,
+      "Status": "Active",
+      "SubdivisionsOfUse": [
+        "AU-NSW"
+      ],
+      "TextFormat": "(ASCII,32)",
+      "Uid": null,
+      "VersionDateUtc": null,
+      "VersionNumber": null,
+      "VisualRepresentationUri": null
+    }
+  ]
+}

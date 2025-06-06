@@ -657,5 +657,5 @@ def extract_basix(f):
                 html = pystache.render(mustache, data)
                 out.write(html)
     index = os.path.join(tmpdirname, "page-11.html")
-    webbrowser.open(index)
+    webbrowser.open("file://" + index)
     return data

@@ -13,6 +13,7 @@ from math import degrees
 
 # f = ifcopenshell.open("/home/dion/basix.ifc")
 
+
 def extract_basix(f):
     site = None
     for element in f.by_type("IfcSite"):
@@ -24,7 +25,6 @@ def extract_basix(f):
         building = element
         break
 
-
     def get_project_address():
         result = []
         if pset := ifcopenshell.util.element.get_pset(site, "Pset_Address"):
@@ -33,12 +33,10 @@ def extract_basix(f):
                     result.append(value)
         return ", ".join(result)
 
-
     def get_plan_type():
         pset_name = "Pset_LandRegistration"
         land_title = ifcopenshell.util.element.get_pset(site, pset_name, "LandTitleID") or ""
         return "SP" if land_title.startswith("SP") else "DP"
-
 
     def get_lot_section_plan():
         pset_name = "Pset_LandRegistration"
@@ -47,22 +45,17 @@ def extract_basix(f):
         section = ifcopenshell.util.element.get_pset(site, "bSA_Site", "SectionNumber") or "-"
         return f"{lot}/{section}/{plan}"
 
-
     def get_project_type():
         return ifcopenshell.util.element.get_pset(building, "bSA_BASIX", "ProjectType") or ""
-
 
     def get_total_bedrooms():
         return len([e for e in f.by_type("IfcSpace") if ifcopenshell.util.element.get_predefined_type(e) == "BEDROOM"])
 
-
     def is_secondary_dwelling():
         return bool(ifcopenshell.util.element.get_pset(building, "bSA_BASIX", "IsSecondaryDwelling"))
 
-
     def site_area():
         return ifcopenshell.util.element.get_pset(site, "Qto_SiteBaseQuantities", "GrossArea") or 0
-
 
     def roof_area():
         return sum(
@@ -70,10 +63,8 @@ def extract_basix(f):
             for e in f.by_type("IfcRoof")
         )
 
-
     def total_storeys():
         return len(f.by_type("IfcBuildingStorey"))
-
 
     def total_zone_area(name):
         total = 0
@@ -86,7 +77,6 @@ def extract_basix(f):
                 total += ifcopenshell.util.element.get_pset(e, "Qto_SpaceBaseQuantities", "GrossFloorArea") or 0
         return total
 
-
     def has_swimming_pool():
         for e in f.by_type("IfcSanitaryTerminalType"):
             if ifcopenshell.util.element.get_predefined_type(e) == "BATH" and ifcopenshell.util.element.get_pset(
@@ -94,7 +84,6 @@ def extract_basix(f):
             ) == ["POOL"]:
                 return True
         return False
-
 
     def has_outdoor_spa():
         for e in f.by_type("IfcSanitaryTerminal"):
@@ -105,7 +94,6 @@ def extract_basix(f):
             ):
                 return True
         return False
-
 
     def water_rating(ifc_class, predefined_type):
         result = 10
@@ -118,7 +106,6 @@ def extract_basix(f):
             result = min(result, rating)
         return result
 
-
     def installing_tank(predefined_type):
         for e in f.by_type("IfcTank"):
             if not [
@@ -130,7 +117,6 @@ def extract_basix(f):
             return True
         return False
 
-
     def greywater_treatment():
         results = []
         for e in f.by_type("IfcDistributionSystem"):
@@ -139,14 +125,12 @@ def extract_basix(f):
                     results.append(e)
         return results
 
-
     def system(predefined_type):
         results = []
         for e in f.by_type("IfcDistributionSystem"):
             if ifcopenshell.util.element.get_predefined_type(e) == predefined_type:
                 results.append(e)
         return results
-
 
     def basix_system(alternative_supply):
         results = []
@@ -160,17 +144,17 @@ def extract_basix(f):
                 results.append(e)
         return results
 
-
     def indoor_outdoor_pool():
         for e in f.by_type("IfcSanitaryTerminalType"):
             if ifcopenshell.util.element.get_predefined_type(e) == "BATH" and ifcopenshell.util.element.get_pset(
                 e, "Pset_SanitaryTerminalTypeBath", "BathType"
             ) == ["POOL"]:
                 if space := ifcopenshell.util.element.get_container(e, ifc_class="IfcSpace"):
-                    if (is_external := ifcopenshell.util.element.get_pset(space, "Pset_SpaceCommon", "IsExternal")) is not None:
+                    if (
+                        is_external := ifcopenshell.util.element.get_pset(space, "Pset_SpaceCommon", "IsExternal")
+                    ) is not None:
                         return bool(is_external)
         return None
-
 
     def bath_pset(bath_type, name, default):
         for e in f.by_type("IfcSanitaryTerminalType"):
@@ -179,7 +163,6 @@ def extract_basix(f):
             ) == [bath_type]:
                 return ifcopenshell.util.element.get_pset(e, "bSA_BASIX", name) or default
         return None
-
 
     def floor_details():
         results = []
@@ -210,7 +193,6 @@ def extract_basix(f):
             )
         return results
 
-
     def external_wall_details():
         results = []
         for e in f.by_type("IfcWallType"):
@@ -227,10 +209,11 @@ def extract_basix(f):
                     "wall_colour": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "WallColour"),
                 }
                 for wall in ifcopenshell.util.element.get_types(e):
-                    data["area"] += ifcopenshell.util.element.get_pset(wall, "Qto_WallBaseQuantities", "NetSideArea") or 0
+                    data["area"] += (
+                        ifcopenshell.util.element.get_pset(wall, "Qto_WallBaseQuantities", "NetSideArea") or 0
+                    )
                 results.append(data)
         return results
-
 
     def internal_wall_details():
         results = []
@@ -245,10 +228,11 @@ def extract_basix(f):
                     "insulation": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "Insulation"),
                 }
                 for wall in ifcopenshell.util.element.get_types(e):
-                    data["area"] += ifcopenshell.util.element.get_pset(wall, "Qto_WallBaseQuantities", "NetSideArea") or 0
+                    data["area"] += (
+                        ifcopenshell.util.element.get_pset(wall, "Qto_WallBaseQuantities", "NetSideArea") or 0
+                    )
                 results.append(data)
         return results
-
 
     def ceiling_roof_details():
         results = []
@@ -263,7 +247,9 @@ def extract_basix(f):
                     "roof_area": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "RoofArea"),
                     "construction_type": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "ConstructionType"),
                     "frame": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "Frame"),
-                    "roof_space_ventilation": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "RoofSpaceVentilation"),
+                    "roof_space_ventilation": ifcopenshell.util.element.get_pset(
+                        e, "bSA_BASIX", "RoofSpaceVentilation"
+                    ),
                     "roof_colour": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "RoofColour"),
                     "ceiling_insulation": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "CeilingInsulation"),
                     "roof_insulation": ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "RoofInsulation"),
@@ -275,7 +261,6 @@ def extract_basix(f):
             )
         return results
 
-
     def insulation_requirements():
         results = {}
         for ifc_class in ["IfcRoof", "IfcWall", "IfcCovering", "IfcSlab"]:
@@ -285,20 +270,21 @@ def extract_basix(f):
                 results.setdefault(u_value, []).append(element)
         return results
 
-
     def bedroom_ceiling_fans():
         for e in f.by_type("IfcSpace"):
             if ifcopenshell.util.element.get_predefined_type(e) != "BEDROOM":
                 continue
             has_fan = False
             for se in ifcopenshell.util.element.get_decomposition(e):
-                if se.is_a("IfcElectricAppliance") and "fan" in ifcopenshell.util.element.get_predefined_type(e).lower():
+                if (
+                    se.is_a("IfcElectricAppliance")
+                    and "fan" in ifcopenshell.util.element.get_predefined_type(e).lower()
+                ):
                     has_fan = True
                     break
             if not has_fan:
                 return False
         return True
-
 
     def habitable_ceiling_fans():
         name = "Daytime Habitable Space"
@@ -319,7 +305,6 @@ def extract_basix(f):
                 if not has_fan:
                     return False
         return True
-
 
     def windows_doors():
         results = []
@@ -406,14 +391,17 @@ def extract_basix(f):
                     "global_id": element.GlobalId,
                     "name": element.Name,
                     "orientation": orientation,
-                    "height": ifcopenshell.util.element.get_pset(element, f"Qto_{ifc_class[3:]}BaseQuantities", "Height")
+                    "height": ifcopenshell.util.element.get_pset(
+                        element, f"Qto_{ifc_class[3:]}BaseQuantities", "Height"
+                    )
                     or 0.0,
                     "width": ifcopenshell.util.element.get_pset(element, f"Qto_{ifc_class[3:]}BaseQuantities", "Width")
                     or 0.0,
                     "window_or_door": ifc_class,
                     "is_skylight": ifcopenshell.util.element.get_predefined_type(element) in ("SKYLIGHT", "LIGHTDOME"),
                     "frame": frame,
-                    "glass": ifcopenshell.util.element.get_pset(element, "Pset_DoorWindowGlazingType", "GlassLayers") or 1,
+                    "glass": ifcopenshell.util.element.get_pset(element, "Pset_DoorWindowGlazingType", "GlassLayers")
+                    or 1,
                     "operation": operation,
                     "uvalue": ifcopenshell.util.element.get_pset(
                         element, f"Pset_{ifc_class[3:]}Common", "ThermalTransmittance"
@@ -431,7 +419,6 @@ def extract_basix(f):
                 results.append(data)
         return results
 
-
     def hot_water_system_type():
         for element in f.by_type("IfcDistributionSystem"):
             if ifcopenshell.util.element.get_predefined_type(element) != "DOMESTICHOTWATER":
@@ -439,15 +426,21 @@ def extract_basix(f):
             if result := ifcopenshell.util.element.get_pset(element, "bSA_BASIX", "HotWaterSystemType"):
                 return result
 
-
     def system_type(system_type, room_type):
+        if f.schema == "IFC4X3":
+            for element in f.by_type("IfcDistributionSystem"):
+                for rel in element.ReferencedInStructures:
+                    space = rel.RelatingStructure
+                    if space.is_a("IfcSpace") and ifcopenshell.util.element.get_predefined_type(space) == room_type:
+                        if result := ifcopenshell.util.element.get_pset(element, "bSA_BASIX", system_type):
+                            return result
+            return
         for element in f.by_type("IfcDistributionSystem"):
-            for rel in element.ReferencedInStructures:
-                space = rel.RelatingStructure
-                if space.is_a("IfcSpace") and ifcopenshell.util.element.get_predefined_type(space) == room_type:
-                    if result := ifcopenshell.util.element.get_pset(element, "bSA_BASIX", system_type):
-                        return result
-
+            for rel in element.ServicesBuildings:
+                for space in rel.RelatedBuildings:
+                    if space.is_a("IfcSpace") and ifcopenshell.util.element.get_predefined_type(space) == room_type:
+                        if result := ifcopenshell.util.element.get_pset(element, "bSA_BASIX", system_type):
+                            return result
 
     def kitchen_natural_light():
         for element in f.by_type("IfcWindow"):
@@ -458,7 +451,6 @@ def extract_basix(f):
                 if space.is_a("IfcSpace") and ifcopenshell.util.element.get_predefined_type(space) == "KITCHEN":
                     return True
         return False
-
 
     def total_bathroom_natural_light():
         spaces = set()
@@ -473,7 +465,6 @@ def extract_basix(f):
                 ]:
                     spaces.add(space)
         return len(spaces)
-
 
     def artificial_lighting():
         total = 0
@@ -490,31 +481,28 @@ def extract_basix(f):
             return False
         return total_efficient / total >= 0.8
 
-
     def bath_heating_system(bath_type):
         for system in f.by_type("IfcDistributionSystem"):
             for element in ifcopenshell.util.system.get_system_elements(system):
                 if (
                     element.is_a("IfcSanitaryTerminalType")
                     and ifcopenshell.util.element.get_predefined_type(element) == "BATH"
-                    and ifcopenshell.util.element.get_pset(element, "Pset_SanitaryTerminalTypeBath", "BathType") == [bath_type]
+                    and ifcopenshell.util.element.get_pset(element, "Pset_SanitaryTerminalTypeBath", "BathType")
+                    == [bath_type]
                 ):
                     if result := ifcopenshell.util.element.get_pset(system, "bSA_BASIX", "PoolHeatingSystemType"):
                         return result
 
-
     def bath_pump(bath_type, prop):
         for element in f.by_type("IfcSanitaryTerminalType"):
-            if (
-                ifcopenshell.util.element.get_predefined_type(element) != "BATH"
-                or ifcopenshell.util.element.get_pset(element, "Pset_SanitaryTerminalTypeBath", "BathType") != [bath_type]
-            ):
+            if ifcopenshell.util.element.get_predefined_type(element) != "BATH" or ifcopenshell.util.element.get_pset(
+                element, "Pset_SanitaryTerminalTypeBath", "BathType"
+            ) != [bath_type]:
                 continue
             for system in ifcopenshell.util.system.get_element_systems(element):
                 for pump in ifcopenshell.util.system.get_system_elements(system):
                     if pump.is_a("IfcPump") and (r := ifcopenshell.util.element.get_pset(system, "bSA_BASIX", prop)):
                         return r
-
 
     def pv_output():
         results = []
@@ -524,14 +512,12 @@ def extract_basix(f):
                     results.append(r)
         return results
 
-
     def cooktop_oven_type():
         elements = f.by_type("IfcBurner")
         elements += f.by_type("IfcElectricAppliance")
         for element in elements:
             if r := ifcopenshell.util.element.get_pset(element, "bSA_BASIX", "CooktopOvenType"):
                 return r
-
 
     def clothesline(is_external):
         for element in f.by_type("IfcFurniture"):
@@ -541,9 +527,7 @@ def extract_basix(f):
                         return True
         return False
 
-
-
-# Step 1
+    # Step 1
     data = {
         "project_name": f.by_type("IfcProject")[0].LongName or "",
         "plan_type": get_plan_type(),
@@ -567,7 +551,7 @@ def extract_basix(f):
         "has_outdoor_spa": has_outdoor_spa(),
     }
 
-# Step 2
+    # Step 2
     data.update(
         {
             "garden_lawn_area": total_zone_area("Garden and Lawn Area"),
@@ -599,12 +583,20 @@ def extract_basix(f):
             "spa_shaded": bath_pset("SPA", "SpaShaded", None),
         }
     )
-    data["www_showerhead_water_rating"] = [{"rating": x, "is_selected": data["showerhead_water_rating"] == x} for x in (1, 2, 3, 4, 5, 6)]
-    data["www_toilet_water_rating"] = [{"rating": x, "is_selected": data["toilet_water_rating"] == x} for x in (1, 2, 3, 4, 5, 6)]
-    data["www_kitchen_water_rating"] = [{"rating": x, "is_selected": data["kitchen_water_rating"] == x} for x in (1, 2, 3, 4, 5, 6)]
-    data["www_bathroom_water_rating"] = [{"rating": x, "is_selected": data["bathroom_water_rating"] == x} for x in (1, 2, 3, 4, 5, 6)]
+    data["www_showerhead_water_rating"] = [
+        {"rating": x, "is_selected": data["showerhead_water_rating"] == x} for x in (1, 2, 3, 4, 5, 6)
+    ]
+    data["www_toilet_water_rating"] = [
+        {"rating": x, "is_selected": data["toilet_water_rating"] == x} for x in (1, 2, 3, 4, 5, 6)
+    ]
+    data["www_kitchen_water_rating"] = [
+        {"rating": x, "is_selected": data["kitchen_water_rating"] == x} for x in (1, 2, 3, 4, 5, 6)
+    ]
+    data["www_bathroom_water_rating"] = [
+        {"rating": x, "is_selected": data["bathroom_water_rating"] == x} for x in (1, 2, 3, 4, 5, 6)
+    ]
 
-# Step 3
+    # Step 3
     data.update(
         {
             "floor_details": floor_details(),
@@ -618,7 +610,7 @@ def extract_basix(f):
         }
     )
 
-# Step 4
+    # Step 4
     data.update(
         {
             "hot_water_system_type": hot_water_system_type(),

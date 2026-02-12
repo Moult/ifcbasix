@@ -133,16 +133,15 @@ def extract_basix(f):
         return results
 
     def basix_system(alternative_supply):
-        results = []
+        # Note, not quite correct. I think you would have one system only
         presets = ["TOWNWATER", "RETICULATEDALTERNATIVE"]
         for e in f.by_type("IfcDistributionSystem"):
             if ifcopenshell.util.element.get_predefined_type(e) != "WATERSUPPLY":
                 continue
-            if not ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "WaterSupplyType") not in presets:
-                continue
-            if alternative_supply in ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "AlternativeSupplyFor") or []:
-                results.append(e)
-        return results
+            if (preset := ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "WaterSupplyType")) in presets:
+                if alternative_supply in ifcopenshell.util.element.get_pset(e, "bSA_BASIX", "AlternativeSupplyFor") or []:
+                    return preset
+        return "Unknown"
 
     def indoor_outdoor_pool():
         for e in f.by_type("IfcSanitaryTerminalType"):
@@ -563,10 +562,10 @@ def extract_basix(f):
             "installing_rainwater_tank": installing_tank("RAINWATER"),
             "installing_stormwater_tank": installing_tank("STORMWATER"),
             "reticulated_alternative_water_supply": system("WATERSUPPLY"),
-            "greywater_treatment": greywater_treatment(),
+            "greywater_treatment": bool(greywater_treatment()),
             "greywater_diversion": system("WASTEWATER"),
             "private_dam": None,
-            "hot_water_system": system("DOMESTICHOTWATER"),
+            "hot_water_system": bool(system("DOMESTICHOTWATER")),
             "reticulated_alternative_water_supply_connection": system("WATERSUPPLY"),
             "garden_and_lawn_alternative": basix_system("GARDENLAWN"),
             "toilet_alternative": basix_system("TOILET"),
@@ -646,9 +645,10 @@ def extract_basix(f):
     print(tmpdirname)
     with open(os.path.join(cwd, "index.html"), "r") as template:
         mustache = template.read()
-        for page in ("11", "12", "13", "14", "21", "22", "33", "36"):
+        pages = ("11", "12", "13", "14", "21", "22", "23", "24", "25", "26", "31", "32", "33", "34", "35", "36")
+        for page in pages:
             with open(os.path.join(tmpdirname, f"page-{page}.html"), "w") as out:
-                for otherpage in ("11", "12", "13", "14", "21", "22", "33", "36"):
+                for otherpage in pages:
                     data[f"is_page_{otherpage}"] = False
                 for otherpage in ("1", "2", "3"):
                     data[f"is_section_{otherpage}"] = False

@@ -217,11 +217,19 @@ thead {
                 <div class="tabs">
                     <span class="tabactive"><a href="page-21.html">2.1 Landscape</a></span>
                     <span class="tab"><a href="page-22.html">2.2 Fixtures</a></span>
+                    <span class="tab"><a href="page-23.html">2.3 Alternative water</a></span>
+                    <span class="tab"><a href="page-24.html">2.4 Alternative water details</a></span>
+                    <span class="tab"><a href="page-25.html">2.5 Pool & spa</a></span>
+                    <span class="tab"><a href="page-26.html">2.6 Status</a></span>
                 </div>
                 {{/is_section_2}}
                 {{#is_section_3}}
                 <div class="tabs">
-                    <span class="tabactive"><a href="page-33.html">3.3 Construction details</a></span>
+                    <span class="tabactive"><a href="page-31.html">3.1 Thermal performance</a></span>
+                    <span class="tab"><a href="page-32.html">3.2 Construction type</a></span>
+                    <span class="tab"><a href="page-33.html">3.3 Construction details</a></span>
+                    <span class="tab"><a href="page-34.html">3.4 Insulation</a></span>
+                    <span class="tab"><a href="page-35.html">3.5 Ceiling fans</a></span>
                     <span class="tab"><a href="page-36.html">3.6 Windows & doors</a></span>
                 </div>
                 {{/is_section_3}}
@@ -354,6 +362,129 @@ Please use address did not display :
                     {{/www_bathroom_water_rating}}
                 </select>
                 {{/is_page_22}}
+
+                {{#is_page_23}}
+                <label>Are you installing a rainwater tank?</label>
+                <span class="{{#installing_rainwater_tank}}radioactive{{/installing_rainwater_tank}}{{^installing_rainwater_tank}}radio{{/installing_rainwater_tank}}"></span> Yes<br />
+                <span class="{{#installing_rainwater_tank}}radio{{/installing_rainwater_tank}}{{^installing_rainwater_tank}}radioactive{{/installing_rainwater_tank}}"></span> No<br />
+
+                <label>Are you installing a stormwater tank?</label>
+                <span class="{{#installing_stormwater_tank}}radioactive{{/installing_stormwater_tank}}{{^installing_stormwater_tank}}radio{{/installing_stormwater_tank}}"></span> Yes<br />
+                <span class="{{#installing_stormwater_tank}}radio{{/installing_stormwater_tank}}{{^installing_stormwater_tank}}radioactive{{/installing_stormwater_tank}}"></span> No<br />
+
+                <label>Is a reticulated alternative water supply (provided by a water utility) available?</label>
+                <p>Systems found:</p>
+                <ul>
+                    {{#reticulated_alternative_water_supply}}
+                    <li>{{.}}</li>
+                    {{/reticulated_alternative_water_supply}}
+                </ul>
+                <span class="radio"></span> Yes<br />
+                <span class="radio"></span> No<br />
+
+                <label>Are you installing a greywater treatment system?</label>
+                <span class="{{#greywater_treatment}}radioactive{{/greywater_treatment}}{{^greywater_treatment}}radio{{/greywater_treatment}}"></span> Yes<br />
+                <span class="{{#greywater_treatment}}radio{{/greywater_treatment}}{{^greywater_treatment}}radioactive{{/greywater_treatment}}"></span> No<br />
+
+                <label>Are you installing a greywater diversion system?</label>
+                <p>Systems found:</p>
+                <ul>
+                    {{#greywater_diversion}}
+                    <li>{{.}}</li>
+                    {{/greywater_diversion}}
+                </ul>
+                <span class="radio"></span> Yes<br />
+                <span class="radio"></span> No<br />
+
+                <label>Will you be using a private dam as an alternative water supply?</label>
+                <span class="radio"></span> Yes<br />
+                <span class="radio"></span> No<br />
+
+                <label>Do you intend to install a hot water recirculation or diversion system?</label>
+                <span class="{{#hot_water_system}}radioactive{{/hot_water_system}}{{^hot_water_system}}radio{{/hot_water_system}}"></span> Yes<br />
+                <span class="{{#hot_water_system}}radio{{/hot_water_system}}{{^hot_water_system}}radioactive{{/hot_water_system}}"></span> No<br />
+                {{/is_page_23}}
+
+                {{#is_page_24}}
+                <label>Reticulated alternative recycled water</label>
+                <label>Please select the reticulated recycled water scheme that the dwelling will be connected to</label>
+                <select>{{#reticulated_alternative_water_supply_connection}}<option>{{.}}</option>{{/reticulated_alternative_water_supply_connection}}</select>
+                <label>Alternative use</label>
+                <label>For each use, nominate the alternative supply system(s)</label>
+                <label>Garden &amp; lawn</label>
+                <select><option>{{garden_and_lawn_alternative}}</option></select>
+                <label>All toilets</label>
+                <select><option>{{toilet_alternative}}</option></select>
+                <label>Laundry</label>
+                <select><option>{{laundry_alternative}}</option></select>
+                <label>All hot water</label>
+                <select><option>{{hot_water_alternative}}</option></select>
+                <label>Drinking and other household</label>
+                <select><option>{{drinking_alternative}}</option></select>
+                {{/is_page_24}}
+
+                {{#is_page_25}}
+                <label>Enter details for your swimming pool and/or outdoor spa</label>
+                <label>Swimming pool</label>
+                <label>Will the pool be indoors or outdoors?</label>
+                <select><option>{{#indoor_outdoor_pool}}External{{/indoor_outdoor_pool}}{{^indoor_outdoor_pool}}Internal{{/indoor_outdoor_pool}}</option></select>
+                <label>What is the volume (kL) of the pool?</label>
+                <input value="{{pool_volume}}"></input>
+                <label>Will the pool have a cover?</label>
+                <span class="{{#pool_cover}}radioactive{{/pool_cover}}{{^pool_cover}}radio{{/pool_cover}}"></span> Yes<br />
+                <span class="{{#pool_cover}}radio{{/pool_cover}}{{^pool_cover}}radioactive{{/pool_cover}}"></span> No<br />
+                <label>Will the pool be shaded?</label>
+                <span class="{{#pool_shaded}}radioactive{{/pool_shaded}}{{^pool_shaded}}radio{{/pool_shaded}}"></span> Yes<br />
+                <span class="{{#pool_shaded}}radio{{/pool_shaded}}{{^pool_shaded}}radioactive{{/pool_shaded}}"></span> No<br />
+                <label>What is the volume (kL) of the spa?</label>
+                <input value="{{spa_volume}}"></input>
+                <label>Will the spa have a cover?</label>
+                <span class="{{#spa_cover}}radioactive{{/spa_cover}}{{^spa_cover}}radio{{/spa_cover}}"></span> Yes<br />
+                <span class="{{#spa_cover}}radio{{/spa_cover}}{{^spa_cover}}radioactive{{/spa_cover}}"></span> No<br />
+                <label>Will the spa be shaded?</label>
+                <span class="{{#spa_shaded}}radioactive{{/spa_shaded}}{{^spa_shaded}}radio{{/spa_shaded}}"></span> Yes<br />
+                <span class="{{#spa_shaded}}radio{{/spa_shaded}}{{^spa_shaded}}radioactive{{/spa_shaded}}"></span> No<br />
+                {{/is_page_25}}
+
+                {{#is_page_26}}
+                <p>Calculation pending</p>
+                {{/is_page_26}}
+
+                {{#is_page_31}}
+                <p>The Thermal performance index sets minimum standards for the thermal performance of the building fabric. This performance affects the heating and cooling components of your Energy score.</p>
+
+                <p>Target: You need to get a "Pass" for the Thermal performance section.</p>
+
+                <p>How to complete the Thermal performance section. What is this?</p>
+
+                <p>Select one of the following methods for completing the Thermal performance section *</p>
+
+                <p><span class="radioactive"></span>Do-it-Yourself (DIY)</p>
+                <p><span class="radio"></span>Simulation method</p>
+                <p><span class="radio"></span>Passive House standard</p>
+
+                <p>The Do-It-Yourself calculates minimal thermal Comfort requirements for your dwelling. The method is designed for use with common construction methods used in typical single dwelling houses. To use DIY, the following criteria must be met:</p>
+
+                <ul>
+                <li>Conditioned floor area must be no more than 300m²</li>
+                <li>Maximum two storeys (attic rooms count as a storey)</li>
+                <li>Open mezzanine areas must be less than 25m²</li>
+                </ul>
+
+                <p>Based on details you have entered in the projects details section, your project complies with these requirements</p>
+
+                <p>In completing the DIY windows section, you must also meet the following criteria:</p>
+
+                <ul>
+                <li>No more than 40 windows can be entered (combining windows of the same orientation is not allowed)</li>
+                <li>Total glazing area is between 10 and 40% of the conditioned floor area (for this project between 11.2 and 44.8)</li>
+                <li>Total area of skylights and sky windows is no more than 3m²</li>
+                </ul>
+
+                <p>By selecting the DIY method, you acknowledge that the project meets the above criteria.</p>
+
+                <p>Depending on the location of the project, some construction options such as a conventional concrete slab on ground and a suspended floor above open subfloor are not available for selection in the DIY method. If you wish to use such construction options, you can select the Simulation method.</p>
+                {{/is_page_31}}
 
                 {{#is_page_33}}
                 <br /><br />
